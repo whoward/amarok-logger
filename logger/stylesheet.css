@@ -1,0 +1,18 @@
+.entry {
+  font-size: 9pt;
+  font-family: monospace;
+}
+
+.entry .date {
+  color: grey;
+  font-style: italic;
+  vertical-align: middle;
+}
+
+.entry .message {
+  vertical-align: middle;
+}
+
+hr {
+  color: grey;
+}
