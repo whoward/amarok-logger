@@ -11,6 +11,9 @@ body {
   padding: 5px 0px;
 }
 
+/**
+ *   Styling for the components of each entry
+ */
 .entry > * {
   display: inline-block;
   vertical-align: middle;
@@ -24,4 +27,17 @@ body {
 }
 
 .entry .message {
+}
+
+/**
+ *   Styling for different kinds of entries 
+ */
+.entry.info {
+  
+}
+
+.entry.notification {
+  color: grey;
+  font-style: italic;
+  border-bottom: none;
 }

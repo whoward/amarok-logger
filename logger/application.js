@@ -1,7 +1,7 @@
 
 Log = new LogWindow(this);
 
-Log.log("Welcome to Amarok scripting console");
+Log.notify("Welcome to Amarok scripting console");
 
 Server = new AmarokLoggingServer(Log, 9000);
 

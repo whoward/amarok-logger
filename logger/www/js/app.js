@@ -5,6 +5,6 @@ $(document).ready(function() {
   Logger = new HtmlLogger("body");
 });
 
-$(window).error(function() {
-  alert("error on page: " + arguments.length);
-});
+window.onerror = function(description, page, line) {
+  alert("error on page: "+description + ", page: " + page + ", line: "+line);
+};

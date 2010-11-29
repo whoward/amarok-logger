@@ -9,60 +9,65 @@ HtmlLogger = function(node) {
   this.node = $(node);
 };
 
-HtmlLogger.prototype.info = function(message) {
-  var container = $("<div/>").addClass("entry").appendTo(this.node);
-  
-  var now = new Date();
-  var datestring = sprintf("%02d:%02d:%02d.%d", now.getHours(), 
-                                      now.getMinutes(), 
-                                      now.getSeconds(),
-                                      now.getMilliseconds());
-                                      
-  $("<div/>").addClass("date").html(datestring).appendTo(container);
-  $("<div/>").addClass("message").html(message).appendTo(container);
-                                      
-  container.addClass("info");
-/*  alert("asked to log the message: "+message);
-  alert("context is "+this.node.html());
-  var msg = this.timestampedMessage.call(this,message);
-  alert("1");
-  msg.addClass("info")
-  alert("2");
-  msg.appendTo(this.node);
-  alert("3");*/
+HtmlLogger.prototype.notification = function(message) {
+  this.basicMessage(message).addClass("notification");
 };
 
-HtmlLogger.prototype.timestampedMessage = function(msg) {
-  alert("creating timestamp for: "+message);
+HtmlLogger.prototype.info = function(message) {
+  this.timestampedMessage(message).addClass("info");
+};
+
+/**
+ * @private
+ */
+HtmlLogger.prototype.basicMessage = function(msg) {
   var container = this.buildEntryContainer();
-  alert("a");
-  this.buildDateContainer().appendTo(container);
-  alert("b");
+  
   this.buildMessageContainer(msg).appendTo(container);
-  alert("c");
+  
   return container;
 };
 
-HtmlLogger.protoype.buildEntryContainer = function() {
-  return $("<div/>").addClass("entry");
+/**
+ * @private
+ */
+HtmlLogger.prototype.timestampedMessage = function(msg) {
+  var container = this.buildEntryContainer();
+  
+  this.buildDateContainer().appendTo(container);
+  this.buildMessageContainer(msg).appendTo(container);
+  
+  return container;
 };
 
+/**
+ * @private
+ */
+HtmlLogger.prototype.buildEntryContainer = function() {
+  return $("<div/>").addClass("entry").appendTo(this.node);
+};
+
+/**
+ * @private
+ */
 HtmlLogger.prototype.buildMessageContainer = function(msg) {
   return $("<div/>").addClass("message").html(msg);
 };
 
+/**
+ * @private
+ */
 HtmlLogger.prototype.buildDateContainer = function() {
   return $("<div/>").addClass("date").html(this.timestampString());
 };
 
+/**
+ * @private
+ */
 HtmlLogger.prototype.timestampString = function() {
-  alert("timestampString");
   var now = new Date();
-  
-  return now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-  
-/*  return sprintf("%02d:%02d:%02d.%d", now.getHours(), 
+  return sprintf("%02d:%02d:%02d.%d", now.getHours(), 
                                       now.getMinutes(), 
                                       now.getSeconds(),
-                                      now.getMilliseconds());*/
+                                      now.getMilliseconds());
 };
