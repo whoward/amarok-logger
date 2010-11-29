@@ -4,13 +4,11 @@ LogWindow = function(parent) {
   this.windowTitle = "Amarok Script Log";
   
   this.layout = new QVBoxLayout(this);
-  
-  this.document = new QTextDocument(this);
-  this.document.defaultStyleSheet = QFile.read(Amarok.Info.scriptPath() + "/stylesheet.css");
-  
-  this.logWidget = new QTextEdit(this);
-  this.logWidget.setDocument(this.document);
-  this.logWidget.readOnly = true;
+
+  var htmlUrl = new QUrl("file://" + Amarok.Info.scriptPath() + "/www/log.html");
+
+  this.logWidget = new QWebView(this);
+  this.logWidget.load(htmlUrl);
   
   this.layout.addWidget(this.logWidget, 0, 1);
   
@@ -20,19 +18,10 @@ LogWindow = function(parent) {
 LogWindow.prototype = new QWidget();
 
 LogWindow.prototype.log = function(message) {
-  var date = new Date();
-  
-  var dateString = sprintf("%02d:%02d:%02d.%d", date.getHours(), date.getMinutes(), 
-                            date.getSeconds(), date.getMilliseconds());
-  
-  var dateHTML    = sprintf("<span class='date'>%s</span>", dateString);
-  var messageHTML = sprintf("<span class='message'>%s</span>", message);
-  var entryHTML   = sprintf("<div class='entry'>%s - %s</div>", dateHTML, messageHTML);
-  
-  this.logWidget.append(entryHTML)
-  this.insertSeparator();
+  //TODO: this message really needs to be string escaped, i.e. convert " to \"
+  this._eval("Logger.info('"+message+"')");
 };
 
-LogWindow.prototype.insertSeparator = function() {
-  this.logWidget.append("<table width='100%'><tr><td><hr /></td></tr></table>");
+LogWindow.prototype._eval = function(javascript) {
+  this.logWidget.page().mainFrame().evaluateJavaScript(javascript);
 };

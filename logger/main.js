@@ -2,6 +2,7 @@
 // load all qt bindings the plugin will use.
 Importer.loadQtBinding("qt.core");
 Importer.loadQtBinding("qt.gui");
+Importer.loadQtBinding("qt.webkit");
 
 // preload the class class because its foundation
 Importer.include("framework/class.js")
@@ -15,7 +16,6 @@ Importer.include("core_extensions/error+amarok.js");
 try {
   Environment.autoload("core_extensions");
   Environment.autoload("classes");
-  Environment.autoload("lib");
   
   if(Environment.isDevelopmentMode()) {
     Amarok.Window.Statusbar.longMessage("the logger plugin is currently running in development mode");
