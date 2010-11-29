@@ -15,5 +15,6 @@ Amarok.Window.ToolsMenu.display_script_log["triggered()"].connect(function() {
 });
 
 if(Environment.isDevelopmentMode()) {
+  Log.setWindowFlags(Qt.WindowFlags(Qt.WindowStaysOnTopHint));
   Log.show();
 }

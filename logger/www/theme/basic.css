@@ -1,9 +1,4 @@
 
-body {
-  padding: 0;
-  margin: 0;
-}
-
 .entry {
   font-size: 10pt;
   font-family: monospace;
@@ -14,10 +9,6 @@ body {
 /**
  *   Styling for the components of each entry
  */
-.entry > * {
-  display: inline-block;
-  vertical-align: middle;
-}
 
 .entry .date {
   color: grey;
@@ -40,4 +31,5 @@ body {
   color: grey;
   font-style: italic;
   border-bottom: none;
+  padding: 0px 5px;
 }
