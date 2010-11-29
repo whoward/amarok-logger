@@ -13,8 +13,15 @@ HtmlLogger.prototype.notification = function(message) {
   this.basicMessage(message).addClass("notification");
 };
 
+var count = 0;
 HtmlLogger.prototype.info = function(message) {
   this.timestampedMessage(message).addClass("info");
+  
+  //TODO: remove me :) i'm just a proof of concept
+  count++;
+  if(count > 2) {
+    window.setTheme("coffee");
+  }
 };
 
 /**
@@ -51,7 +58,15 @@ HtmlLogger.prototype.buildEntryContainer = function() {
  * @private
  */
 HtmlLogger.prototype.buildMessageContainer = function(msg) {
-  return $("<div/>").addClass("message").html(msg);
+  return $("<div/>").addClass("message").html(this.convertWhitespace(msg));
+};
+
+/**
+ * Converts \n to <br/> and \t to <span class='tab'/>
+ * @private
+ */
+HtmlLogger.prototype.convertWhitespace = function(msg) {
+  return msg.replace(/\n/g, "<br/>").replace(/\t/g, '<span class="tab"/>');
 };
 
 /**
@@ -66,8 +81,8 @@ HtmlLogger.prototype.buildDateContainer = function() {
  */
 HtmlLogger.prototype.timestampString = function() {
   var now = new Date();
-  return sprintf("%02d:%02d:%02d.%d", now.getHours(), 
-                                      now.getMinutes(), 
-                                      now.getSeconds(),
-                                      now.getMilliseconds());
+  return sprintf("%02d:%02d:%02d.%03d", now.getHours(), 
+                                        now.getMinutes(), 
+                                        now.getSeconds(),
+                                        now.getMilliseconds());
 };

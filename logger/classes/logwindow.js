@@ -4,6 +4,7 @@ LogWindow = function(parent) {
   this.windowTitle = "Amarok Script Log";
   
   this.layout = new QVBoxLayout(this);
+  this.layout.setContentsMargins(0,0,0,0);
 
   var htmlUrl = new QUrl("file://" + Amarok.Info.scriptPath() + "/www/log.html");
 
@@ -30,35 +31,52 @@ LogWindow = function(parent) {
       var arguments = self.afterLoadedLogQueue[i][1];
       self[method].apply(self, arguments);
     }
-    //self.afterLoadedLogQueue = [];
+    self.afterLoadedLogQueue = [];
   });
 };
 
 LogWindow.prototype = new QWidget();
 
 LogWindow.prototype.log = function(message) {
-  // if the logger page hasn't loaded yet then push this function call onto
-  // a stack to call once the page has loaded
-  if(!this.loaded) {
-    this.afterLoadedLogQueue.push(["log", arguments]);
-    return;
-  }
-  
-  //TODO: this message really needs to be string escaped, i.e. convert " to \"
-  this._eval("Logger.info('"+message+"')");
+  var javascript = sprintf('Logger.info("%s")', message);
+  this._evalWithLoadingQueue(javascript, "log", arguments);
 };
 
 LogWindow.prototype.notify = function(message) {
-  // if the logger page hasn't loaded yet then push this function call onto
-  // a stack to call once the page has loaded
+  var javascript = sprintf('Logger.notification("%s")', this._escapeJavaScriptString(message));
+  this._evalWithLoadingQueue(javascript, "notify", arguments);
+};
+
+/**
+ * Converts invalid string characters to string escaped characters
+ * for use in JavaScript
+ * @private
+ */
+LogWindow.prototype._escapeJavaScriptString = function(str) {
+  return str.replace(/\\/g,"\\\\").replace(/\n/g, "\\n").replace(/\r/g,"\\r")
+    .replace(/\0/g,"\\0").replace(/\f/g,"\\f").replace(/\t/g,"\\t")
+    .replace(/\v/g,"\\v").replace(/'/g,"\\'").replace(/"/g,"\\\"");
+};
+
+/**
+ * Sends the javascript to be evaluated but only if the page is currently
+ * loaded.  If it is not loaded then we add the caller and arguments to
+ * a queue which will be called when the page has loaded.
+ * @private
+ */
+LogWindow.prototype._evalWithLoadingQueue = function(javascript,caller,args) {
   if(!this.loaded) {
-    this.afterLoadedLogQueue.push(["notify", arguments]);
+    this.afterLoadedLogQueue.push([caller, args]);
     return;
   }
   
-  this._eval("Logger.notification('"+message+"')");
-}
+  this._eval(javascript);
+};
 
+/**
+ * Sends javascript to the window to be evaluated on the global scope
+ * @private
+ */
 LogWindow.prototype._eval = function(javascript) {
   this.logWidget.page().mainFrame().evaluateJavaScript(javascript);
 };

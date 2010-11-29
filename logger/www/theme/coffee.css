@@ -1,0 +1,40 @@
+
+body {
+  background-color: #1A1A1A;
+}
+
+.entry {
+  font-size: 10pt;
+  font-family: monospace;
+  border-bottom: 1px solid #A0AB7D;
+  padding: 5px 0px;
+}
+
+/**
+ *   Styling for the components of each entry
+ */
+
+.entry .date {
+  color: #726D73;
+  font-style: italic;
+  min-width: 100px;
+  font-size: 9pt;
+}
+
+.entry .message {
+  color: #D7B67C;
+}
+
+/**
+ *   Styling for different kinds of entries 
+ */
+.entry.info {
+  
+}
+
+.entry.notification {
+  color: #AC8350;
+  font-style: italic;
+  border-bottom: none;
+  padding: 0px 5px;
+}

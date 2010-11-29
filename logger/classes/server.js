@@ -51,7 +51,7 @@ AmarokLoggingServer.prototype.connected = function() {
     if(endOfRequest <= 0) { return; }
     
     try {
-      var data = request.left(endOfRequest);
+      var data = request.left(endOfRequest).toString();
       
       request.clear();
       
