@@ -12,10 +12,9 @@ LoggerClient = function(port) {
   // assign default values to the optional port argument
   port = port || 9000;
   
-  // call the 'super method' on QTcpSocket
-  QTcpSocket.call(this, null);
-  
-  this.connectToHost("127.0.0.1", port);
+  /** socket object for communicating with the remote plugin */
+  this.socket = new QTcpSocket(null);
+  this.socket.connectToHost("127.0.0.1", port);
 };
 
 LoggerClient.prototype = new QTcpSocket();
@@ -30,13 +29,15 @@ LoggerClient.protocol = {
   "fieldSeparator": String.fromCharCode(31),
 }
 
+LoggerClient.prototype.error = function(message) {
+  this._callRemote("error", message);
+};
+
 LoggerClient.prototype.notify = function(message) {
-  //Amarok.alert("LoggerClient - sending notify:"+message);
   this._callRemote("notify", message);
 };
 
 LoggerClient.prototype.log = function(message) {
-  //Amarok.alert("LoggerClient - sending log:"+message);
   this._callRemote("log", message);
 };
 
@@ -50,7 +51,8 @@ LoggerClient.prototype._callRemote = function(remote, message) {
   // append the message terminator to the stream
   data.append(protocol.messageTerminator);
 
-  this.write(data);  
+  // write the data to the socket
+  this.socket.write(data);
   
   data.clear();
 };

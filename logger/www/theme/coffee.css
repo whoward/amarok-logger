@@ -21,20 +21,23 @@ body {
   font-size: 9pt;
 }
 
-.entry .message {
-  color: #D7B67C;
-}
-
 /**
  *   Styling for different kinds of entries 
  */
 .entry.info {
-  
+  color: #D7B67C;
 }
 
 .entry.notification {
   color: #AC8350;
   font-style: italic;
+  border-bottom: none;
+  padding: 0px 5px;
+}
+
+.entry.error {
+  color: red;
+  font-weight: bold;
   border-bottom: none;
   padding: 0px 5px;
 }

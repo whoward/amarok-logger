@@ -9,6 +9,10 @@ HtmlLogger = function(node) {
   this.node = $(node);
 };
 
+HtmlLogger.prototype.error = function(message) {
+  this.basicMessage(message).addClass("error");
+};
+
 HtmlLogger.prototype.notification = function(message) {
   this.basicMessage(message).addClass("notification");
 };

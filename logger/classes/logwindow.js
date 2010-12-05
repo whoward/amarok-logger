@@ -38,13 +38,18 @@ LogWindow = function(parent) {
 LogWindow.prototype = new QWidget();
 
 LogWindow.prototype.log = function(message) {
-  var javascript = sprintf('Logger.info("%s")', message);
+  var javascript = sprintf('Logger.info("%s")', this._escapeJavaScriptString(message));
   this._evalWithLoadingQueue(javascript, "log", arguments);
 };
 
 LogWindow.prototype.notify = function(message) {
   var javascript = sprintf('Logger.notification("%s")', this._escapeJavaScriptString(message));
   this._evalWithLoadingQueue(javascript, "notify", arguments);
+};
+
+LogWindow.prototype.error = function(message) {
+  var javascript = sprintf('Logger.error("%s")', this._escapeJavaScriptString(message));
+  this._evalWithLoadingQueue(javascript, "error", arguments);
 };
 
 /**
