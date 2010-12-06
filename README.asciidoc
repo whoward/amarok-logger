@@ -32,7 +32,6 @@ are installed.  In Ubuntu/Kubuntu that means installing the following packages:
 Finally you should see your output !
 
 === Calling methods on the logger client object:
-[source,javascript]
 Logger = new LoggerClient();
 Logger.log("Starting up the new plugin!");
 Logger.notify("This is a notification style message");
@@ -43,7 +42,6 @@ In other words - if you want to use the HEAD version of the master branch
 (which may be unstable) you can simple clone this repository then run the
 following command line to generate the Amarok installable archive:
 
-[source,bash]
 rake make:tarball
 
 You will of course need to have Rake installed, which should be in most people's
