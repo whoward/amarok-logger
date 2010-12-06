@@ -22,6 +22,8 @@ try {
     Amarok.Window.Statusbar.longMessage("the logger plugin is currently running in development mode");
   }
   
+  Config = new Configuration();
+  
   Importer.include("application.js");
 } catch(e) {
   // if for some reason the raised object wasn't an error

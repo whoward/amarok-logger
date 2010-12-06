@@ -35,7 +35,29 @@ LogWindow = function(parent) {
   });
 };
 
+/**
+ * Returns a list of all available themes
+ */
+LogWindow.getThemeList = function() {
+  // find all css files in the www/theme directory
+  var directory = new QDir(Amarok.Info.scriptPath() + "/www/theme");
+  var files = directory.entryList(["*.css"]);
+  
+  // map to the basename of each of these files
+  for(var i = 0; i < files.length; i += 1) {
+    files[i] = files[i].replace(/\..+$/,'');
+  }
+  
+  // return a list of all the basenames
+  return files;
+};
+
 LogWindow.prototype = new QWidget();
+
+LogWindow.prototype.setTheme = function(theme) {
+  var javascript = sprintf('window.setTheme("%s")', this._escapeJavaScriptString(theme));
+  this._evalWithLoadingQueue(javascript, "setTheme", arguments);
+};
 
 LogWindow.prototype.log = function(message) {
   var javascript = sprintf('Logger.info("%s")', this._escapeJavaScriptString(message));

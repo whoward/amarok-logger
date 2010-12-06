@@ -20,12 +20,6 @@ HtmlLogger.prototype.notification = function(message) {
 var count = 0;
 HtmlLogger.prototype.info = function(message) {
   this.timestampedMessage(message).addClass("info");
-  
-  //TODO: remove me :) i'm just a proof of concept
-  count++;
-  if(count > 2) {
-    window.setTheme("coffee");
-  }
 };
 
 /**
