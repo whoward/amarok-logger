@@ -20,10 +20,7 @@ Enough of that - how do you use it in your plugins?
 
 1. make sure qtscript bindings for the core, gui, network and webkit modules
 are installed.  In Ubuntu/Kubuntu that means installing the following packages:
-  * libqtscript4-core
-  * libqtscript4-gui
-  * libqtscript4-network
-  * libqtscript4-webkit
+  `libqtscript4-core libqtscript4-gui libqtscript4-network libqtscript4-webkit`
 2. start by installing this plugin (naturally)
 3. add logger_client.js to your own plugin project
 4. call methods on the logger object - see the example below.
