@@ -1,4 +1,10 @@
+/**
+ * @fileoverview
+ */
 
+/**
+ * @constructor
+ */
 LogWindow = function(parent) {
   QWidget.call(this, parent);
   this.windowTitle = "Amarok Script Log";
