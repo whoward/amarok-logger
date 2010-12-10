@@ -1,4 +1,7 @@
 
+// The version number of this plugin
+VERSION = [1, 0];
+
 // load all qt bindings the plugin will use.
 Importer.loadQtBinding("qt.core");
 Importer.loadQtBinding("qt.gui");
@@ -23,6 +26,15 @@ try {
   }
   
   Config = new Configuration();
+
+  Updater = new GithubAutoupdater("whoward", "amarok-logger", VERSION);
+
+  Updater.checkForUpdate(function(version) {
+    Updater.getRepositoryInfo(function(info) {
+      var link = sprintf("<a href='%s'>%s</a>", info.homepage, info.homepage);
+      Amarok.alert("A new update of the Amarok Logger plugin is available.  To upgrade please visit " + link); 
+    });
+  });
   
   Importer.include("application.js");
 } catch(e) {
